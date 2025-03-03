@@ -32,7 +32,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: daviditas/itas276-assignment1:latest
+          tags: ${{vars.DOCKER_IMAGE_TAG }}
   
   semgrep:
     name: Semgrep (SAST)
@@ -59,13 +59,22 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Docker Pull
+        run: docker pull ${{vars.DOCKER_IMAGE_TAG }}
+
       - name: Run Snyk to check Docker image for vulnerabilities
         continue-on-error: true
         uses: snyk/actions/docker@master
         env:
           SNYK_TOKEN: ${{ secrets.SYNK_API_KEY }}
         with:
-          image: daviditas/itas276-assignment1:latest
+          image: ${{vars.DOCKER_IMAGE_TAG }}
           # args: --file=Dockerfile
 
       - name: Upload Artifact 
