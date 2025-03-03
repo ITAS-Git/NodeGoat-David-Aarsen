@@ -75,7 +75,7 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SYNK_API_KEY }}
         with:
           image: ${{vars.DOCKER_IMAGE_TAG }}
-          # args: --file=Dockerfile
+          args: --file=Dockerfile
 
       - name: Upload Artifact 
         uses: actions/upload-artifact@v4 
