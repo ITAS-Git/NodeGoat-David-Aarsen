@@ -35,7 +35,7 @@ jobs:
           tags: daviditas/itas276-assignment1:latest
   
   semgrep:
-    name: Semgrep
+    name: Semgrep (SAST)
     runs-on: ubuntu-latest
     container:
       image: semgrep/semgrep
@@ -53,3 +53,22 @@ jobs:
         with:
           name: semgrep.sarif
           path: semgrep.sarif
+
+  snyk:
+    name: Snyk (SCA)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run Snyk to check Docker image for vulnerabilities
+        continue-on-error: true
+        uses: snyk/actions/docker@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SYNK_API_KEY }}
+        with:
+          image: daviditas/itas276-assignment1:latest
+          # args: --file=Dockerfile
+
+      - name: Upload Artifact 
+        uses: actions/upload-artifact@v4 
+        with:
+          name: snyk.sarif
+          path: snyk.sarif
