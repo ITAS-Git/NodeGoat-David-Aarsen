@@ -65,12 +65,6 @@ jobs:
       - name: Build the Docker image
         run: docker build . --file Dockerfile --tag ${{ vars.DOCKER_IMAGE }}:latest
 
-      - name: whoami
-        run: |
-          ls -ld /github/home
-          ls -l /github/home/.gitconfig
-          whoami
-
       - name: Run Snyk to check Docker image for vulnerabilities
         continue-on-error: true
         uses: snyk/actions/docker@master
