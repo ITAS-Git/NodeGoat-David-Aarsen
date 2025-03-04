@@ -9,7 +9,7 @@ on:
 jobs:
   build:
     name: Build
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
       - name: Checkout
@@ -56,7 +56,7 @@ jobs:
 
   snyk:
     name: Snyk (SCA)
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     # needs: build
     steps:
       - name: Checkout
