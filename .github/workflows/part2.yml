@@ -63,7 +63,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Build the Docker image
-        run: docker build . --file Dockerfile --tag ${{ vars.DOCKER_IMAGE }}:local
+        run: docker build . --file Dockerfile --tag ${{ vars.DOCKER_IMAGE }}:latest
 
       - name: Run Snyk to check Docker image for vulnerabilities
         continue-on-error: true
@@ -71,7 +71,7 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SYNK_API_KEY }}
         with:
-          image: ${{ vars.DOCKER_IMAGE }}:local
+          image: ${{ vars.DOCKER_IMAGE }}:latest
           args: --file=Dockerfile
 
       - name: Upload Artifact 
