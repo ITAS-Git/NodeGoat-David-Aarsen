@@ -65,6 +65,11 @@ jobs:
       - name: Build the Docker image
         run: docker build . --file Dockerfile --tag ${{ vars.DOCKER_IMAGE }}:latest
 
+      - name: whoami
+        run: |
+          ls -ld /github/home
+          ls -l /github/home/.gitconfig
+          whoami
 
       - name: Run Snyk to check Docker image for vulnerabilities
         continue-on-error: true
@@ -74,16 +79,6 @@ jobs:
         with:
           image: ${{ vars.DOCKER_IMAGE }}:latest
           args: --file=Dockerfile
-
-
-      - name: whoami
-        run: |
-          whoami
-          ls -l /
-          ls -ld /github
-          ls -ld /github/home
-          ls -l /github/home/.gitconfig
-
 
       - name: Upload Artifact 
         uses: actions/upload-artifact@v4 
