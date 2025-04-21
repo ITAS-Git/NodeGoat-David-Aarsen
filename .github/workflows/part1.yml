@@ -20,7 +20,7 @@ jobs:
           avatar-url: https://robohash.org/itas
           embed-title: "🐋 Buidling Docker Image & Starting Pipeline"
           embed-url: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          embed-description: "Building ${{ vars.DOCKER_IMAGE }}:latest\n[View Job](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}/job/${{ github.job }})"
+          embed-description: "Building ${{ vars.DOCKER_IMAGE }}:latest\n[View Job](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})/job/${{ github.job }}"
           embed-author-name: "${{ github.triggering_actor }}"
           embed-author-url: "https://github.com/${{ github.triggering_actor }}"
           embed-color: 3447003
@@ -75,7 +75,7 @@ jobs:
           avatar-url: https://robohash.org/itas
           embed-title: "🕵️ Starting Semgrep (SAST) Analysis"
           embed-url: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          embed-description: "[View Job](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}/job/${{ github.job }})"
+          embed-description: "[View Job](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})/job/${{ github.job }}"
           embed-author-name: "${{ github.triggering_actor }}"
           embed-author-url: "https://github.com/${{ github.triggering_actor }}"
           embed-color: 5763719
@@ -121,7 +121,7 @@ jobs:
           avatar-url: https://robohash.org/itas
           embed-title: "🛡️ Starting Start Snyk (SCA) Analysis"
           embed-url: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          embed-description: "[View Job](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}/job/${{ github.job }})"
+          embed-description: "[View Job](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})/job/${{ github.job }}"
           embed-author-name: "${{ github.triggering_actor }}"
           embed-author-url: "https://github.com/${{ github.triggering_actor }}"
           embed-color: 7419530
