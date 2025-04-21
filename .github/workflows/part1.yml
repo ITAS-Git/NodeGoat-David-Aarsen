@@ -18,12 +18,12 @@ jobs:
           webhook-url: ${{ secrets.DISCORD_WEBHOOK_URL }}
           username: ${{github.repository}}
           avatar-url: https://robohash.org/itas
-          embed-title: "🐋 Buidling Docker Image"
+          embed-title: "🐋 Buidling Docker Image & Starting Pipeline"
           embed-url: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           embed-description: "Building ${{ vars.DOCKER_IMAGE }}:latest\n[View Pipeline](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})"
           embed-author-name: "${{ github.triggering_actor }}"
           embed-author-url: "https://github.com/${{ github.triggering_actor }}"
-          embed-color: 2123412
+          embed-color: 3447003
   
       - name: Checkout
         uses: actions/checkout@v4
@@ -47,26 +47,42 @@ jobs:
           push: true
           tags: ${{ vars.DOCKER_IMAGE }}:latest
 
-      - name: Discord Webhook Action (Start Docker Build)
+      - name: Discord Webhook Action (Finish Docker Build)
         uses: tsickert/discord-webhook@v7.0.0
         with: 
           webhook-url: ${{ secrets.DISCORD_WEBHOOK_URL }}
           username: ${{github.repository}}
           avatar-url: https://robohash.org/itas
-          embed-title: "🐳 Docker Image Built"
+          embed-title: "🐳 Docker Build Complete"
           embed-url: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          embed-description: "Finished building ${{ vars.DOCKER_IMAGE }}:latest\n[View on Docker Hub](https://hub.docker.com/repository/docker/${{ vars.DOCKER_IMAGE }})"
+          embed-description: "Built ${{ vars.DOCKER_IMAGE }}:latest\n[View on Docker Hub](https://hub.docker.com/repository/docker/${{ vars.DOCKER_IMAGE }})"
           embed-author-name: "${{ github.triggering_actor }}"
           embed-author-url: "https://github.com/${{ github.triggering_actor }}"
-          embed-color: 2123412
+          embed-color: 3447003
 
   semgrep:
     name: Semgrep (SAST)
     runs-on: ubuntu-latest
     container:
       image: semgrep/semgrep
+    
+    outputs:
+      semgrep-serif-url: ${{ steps.semgrep-serif-upload.outputs.artifact-url }}
 
     steps:
+      - name: Discord Webhook Action (Start Semgrep (SAST))
+        uses: tsickert/discord-webhook@v7.0.0
+        with: 
+          webhook-url: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          username: ${{github.repository}}
+          avatar-url: https://robohash.org/itas
+          embed-title: "🕵️ Starting Semgrep (SAST) Analysis"
+          embed-url: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          embed-description: "[View Pipeline](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})"
+          embed-author-name: "${{ github.triggering_actor }}"
+          embed-author-url: "https://github.com/${{ github.triggering_actor }}"
+          embed-color: 5763719
+
       - name: Checkout
         uses: actions/checkout@v4
 
@@ -77,8 +93,23 @@ jobs:
       - name: Upload Artifact 
         uses: actions/upload-artifact@v4 
         with:
+          id: semgrep-sarif-upload
           name: semgrep.sarif
           path: semgrep.sarif
+
+      - name: Discord Webhook Action (Start Semgrep (SAST))
+        uses: tsickert/discord-webhook@v7.0.0
+        with: 
+          webhook-url: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          username: ${{github.repository}}
+          avatar-url: https://robohash.org/itas
+          embed-title: "✔️ Finished Semgrep (SAST) Analysis"
+          embed-url: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          embed-description: "[Download semgrep.sarif](${{ needs.semgrep.outputs.semgrep-serif-url }}"
+          embed-author-name: "${{ github.triggering_actor }}"
+          embed-author-url: "https://github.com/${{ github.triggering_actor }}"
+          embed-color: 5763719    
+          
 
   snyk:
     name: Snyk (SCA)
