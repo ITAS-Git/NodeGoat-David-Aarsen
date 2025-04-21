@@ -65,10 +65,7 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: semgrep/semgrep
-    
-    # outputs:
-    #   url: ${{ steps.semgrep-serif-upload.outputs.artifact-url }}
-
+  
     steps:
       - name: Discord Webhook Action (Start Semgrep (SAST))
         uses: tsickert/discord-webhook@v7.0.0
@@ -92,8 +89,8 @@ jobs:
     
       - name: Upload Artifact 
         uses: actions/upload-artifact@v4 
+        id: upload-semgrep-sarif
         with:
-          id: semgrep-sarif-upload
           name: semgrep.sarif
           path: semgrep.sarif
 
@@ -103,9 +100,9 @@ jobs:
           webhook-url: ${{ secrets.DISCORD_WEBHOOK_URL }}
           username: ${{github.repository}}
           avatar-url: https://robohash.org/itas
-          embed-title: "✔️ Finished Semgrep (SAST) Analysis"
+          embed-title: "☑️ Finished Semgrep (SAST) Analysis"
           embed-url: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          embed-description: "[Download semgrep.sarif](${{ steps.semgrep-sarif-upload.outputs.artifact-url }})"
+          embed-description: "[Download semgrep.sarif](${{ steps.upload-semgrep-sarif.outputs.artifact-url }})"
           embed-author-name: "${{ github.triggering_actor }}"
           embed-author-url: "https://github.com/${{ github.triggering_actor }}"
           embed-color: 5763719    
