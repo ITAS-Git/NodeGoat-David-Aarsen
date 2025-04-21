@@ -67,7 +67,7 @@ jobs:
       image: semgrep/semgrep
     
     outputs:
-      semgrep-serif-url: ${{ steps.semgrep-serif-upload.outputs.artifact-url }}
+      url: ${{ steps.semgrep-serif-upload.outputs.artifact-url }}
 
     steps:
       - name: Discord Webhook Action (Start Semgrep (SAST))
@@ -105,7 +105,7 @@ jobs:
           avatar-url: https://robohash.org/itas
           embed-title: "✔️ Finished Semgrep (SAST) Analysis"
           embed-url: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          embed-description: "[Download semgrep.sarif](${{ needs.semgrep.outputs.semgrep-serif-url }})"
+          embed-description: "[Download semgrep.sarif](${{ needs.semgrep.outputs.url }})"
           embed-author-name: "${{ github.triggering_actor }}"
           embed-author-url: "https://github.com/${{ github.triggering_actor }}"
           embed-color: 5763719    
