@@ -18,8 +18,9 @@ jobs:
           webhook-url: ${{ secrets.DISCORD_WEBHOOK_URL }}
           username: ${{github.repository}}
           avatar-url: https://robohash.org/itas
-          embed-title: "Buidling Docker Image"
+          embed-title: "Buidling Docker Image 🐋"
           embed-url: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          embed-description: "Building ${{ vars.DOCKER_IMAGE }}:latest"
           embed-author-name: "${{ github.triggering_actor }}"
   
       - name: Checkout
