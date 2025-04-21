@@ -20,7 +20,7 @@ jobs:
           avatar-url: https://robohash.org/itas
           embed-title: "🐋 Buidling Docker Image"
           embed-url: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          embed-description: "Building ${{ vars.DOCKER_IMAGE }}:latest\n[View Pipeline] (${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})"
+          embed-description: "Building ${{ vars.DOCKER_IMAGE }}:latest\n[View Pipeline](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})"
           embed-author-name: "${{ github.triggering_actor }}"
           embed-author-url: "https://github.com/${{ github.triggering_actor }}"
           embed-color: 2123412
