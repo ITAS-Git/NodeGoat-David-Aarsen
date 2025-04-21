@@ -21,7 +21,9 @@ jobs:
           embed-title: "Buidling Docker Image 🐋"
           embed-url: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           embed-description: "Building ${{ vars.DOCKER_IMAGE }}:latest"
-          embed-author-name: "${{ github.triggering_actor }}"
+          embed-author-name: "Initiated by ${{ github.triggering_actor }}"
+          embed-footer-text: "Foot text [test](https://google.com)"
+          embed-color: 15430476
   
       - name: Checkout
         uses: actions/checkout@v4
