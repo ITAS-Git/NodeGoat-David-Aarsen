@@ -12,6 +12,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Discord Webhook Action (Start)
+        uses: tsickert/discord-webhook@v7.0.0
+        with: 
+          webhook-url: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          username: ${{github.repository}}
+          avatar-url: https://robohash.org/itas
+          embed-title: "Buidling Docker Image"
+          embed-url: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          embed-author-name: "${{ github.triggering_actor }}"
+  
       - name: Checkout
         uses: actions/checkout@v4
 
