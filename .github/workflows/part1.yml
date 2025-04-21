@@ -94,7 +94,7 @@ jobs:
           name: semgrep.sarif
           path: semgrep.sarif
 
-      - name: Discord Webhook Action (Start Semgrep (SAST))
+      - name: Discord Webhook Action (Finish Semgrep (SAST))
         uses: tsickert/discord-webhook@v7.0.0
         with: 
           webhook-url: ${{ secrets.DISCORD_WEBHOOK_URL }}
@@ -106,13 +106,26 @@ jobs:
           embed-author-name: "${{ github.triggering_actor }}"
           embed-author-url: "https://github.com/${{ github.triggering_actor }}"
           embed-color: 5763719    
-          
-
+        
   snyk:
     name: Snyk (SCA)
     runs-on: ubuntu-latest
     needs: build
     steps:
+
+      - name: Discord Webhook Action (Start Snyk (SCA))
+        uses: tsickert/discord-webhook@v7.0.0
+        with: 
+          webhook-url: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          username: ${{github.repository}}
+          avatar-url: https://robohash.org/itas
+          embed-title: "🛡️ Starting Start Snyk (SCA) Analysis"
+          embed-url: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          embed-description: "[View Pipeline](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})"
+          embed-author-name: "${{ github.triggering_actor }}"
+          embed-author-url: "https://github.com/${{ github.triggering_actor }}"
+          embed-color: 7419530
+
       - name: Checkout
         uses: actions/checkout@v4
 
@@ -136,6 +149,20 @@ jobs:
 
       - name: Upload Artifact 
         uses: actions/upload-artifact@v4 
+        id: upload-snyk-sarif
         with:
           name: snyk.sarif
           path: snyk.sarif
+
+      - name: Discord Webhook Action (Finish Snyk (SCA))
+        uses: tsickert/discord-webhook@v7.0.0
+        with: 
+          webhook-url: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          username: ${{github.repository}}
+          avatar-url: https://robohash.org/itas
+          embed-title: "☑️ Finished Snyk (SCA) Analysis"
+          embed-url: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          embed-description: "[Download snyk.sarif](${{ steps.upload-snyk-sarif.outputs.artifact-url }})"
+          embed-author-name: "${{ github.triggering_actor }}"
+          embed-author-url: "https://github.com/${{ github.triggering_actor }}"
+          embed-color: 7419530    
